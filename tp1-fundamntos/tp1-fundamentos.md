@@ -1,3 +1,12 @@
+## Ejercicio 1
+
+### Introduccion
+Partimos estableciendo algunas definiciones. La hipotesis de que las computadoras pueden simular inteligencia se denomina como Hipotesis de Inteligencia Artificial Debil, por otro lado la hipotesis que se refiere a que las computadoras realmente son inteligentes y no solamente una simulacion de inteligencia se le denomina como Hipotesis de Inteligencia Artificial Fuerte.
+
+### Inteligencia Artificial Debil
+
+### Inteligencia Artificial Fuerte
+
 ## Ejercicio 2
 ### ¿Es posible considerar a los agentes conversacionales basados en grandes modelos de lenguaje (LLMs) como conscientes?
 No considero que sea correcto denominarlos conscientes cuando realmente es solamente un algoritmo probabilistico refinado con un gran volumen de datos que intenta replicar conversaciones
