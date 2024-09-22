@@ -1,43 +1,26 @@
 import random
 
 
-_CLEAN_CELL = 0
-_DIRTY_CELL = 1
-_CLEANED = 2
-
 class Environment:
-    def __init__(self,sizeX,sizeY,dirt_rate: float) -> None:
-
+    def __init__(self, sizeX, sizeY, dirt_rate: float):
         self.sizeX = sizeX
         self.sizeY = sizeY
         self.dirt_rate = dirt_rate
-        self.grid = create_grid(sizeX, sizeY)
+        self.grid = self.create_grid(sizeX, sizeY)
         self.dirty_cells = round(sizeX * sizeY * dirt_rate)
         self.random_dirty(self.dirty_cells)
 
+    def create_grid(self, sizeX: int, sizeY: int):
+        return [[0 for _ in range(sizeY)] for _ in range(sizeX)]
 
-    def create_grid(sizeX: int, sizeY: int) -> grid:
-        return [[_CLEAN_CELL for _ in range(sizeY)] for _ in range(sizeX)] # Creo una matriz de un tamaño especifico marcando como limpio cada espacio
+    def random_dirty(self, dirty_cells: int): # genero casillas sucias aleatoriamente
+        for _ in range(self.dirty_cells):
+            pos_x = random.randint(0, self.sizeX - 1)
+            pos_y = random.randint(0, self.sizeY - 1)
+            self.grid[pos_x][pos_y] = 1  
         
-    
-    def random_dirty(self, dirty_cells: int) -> None: # Randomizo las posiciones sucias iniciales, si la casilla ya esta sucia entonces se intenta con otra
 
-        grid = self.grid
-        count = 0
-        while count < dirty_cells:
-
-            Xpos = random(0, (self.sizeX - 1))
-            Ypos = random(0, (self.sizeY - 1))
-
-            if not is_dirty(grid):  
-                grid[Xpos][Ypos] = _DIRTY_CELL
-                count += 1
-            
-
-
-    def accept_action(self, action: String, Xpos: int, Ypos: int) -> bool:
-
-        # Movimientos posibles
+    def acceptAction(self, action, Xpos: int, Ypos: int) -> bool:
         moves = {
             "Up": (1, 0),
             "Down": (-1, 0),
@@ -46,24 +29,26 @@ class Environment:
         }
 
         if action in moves:
-            x, y = moves[action]
-            movX, movY = Xpos + x, Ypos + y
-
-            return (0<= movX < self.sizeX) and (0 <= movY < self.sizeY)
+            movX, movY = moves[action] 
+            new_x, new_y = Xpos + movX, Ypos + movY
+            
+            # Verifico que no me salga de la matriz
+            return (0 <= new_x < self.sizeX) and (0 <= new_y < self.sizeY)
         
-        if action == "Suck":
+        elif action == "Clean":
             if self.is_dirty(Xpos, Ypos):
-                self.grid[Xpos][Ypos] = _CLEANED
+                self.grid[Xpos][Ypos] = 0
                 self.dirty_cells -= 1
                 return True
+            return False
+        
+        return False   
 
-    
-    def is_dirty(self, Xpos: int, Ypos: int) -> bool:
-        return self.grid[Xpos][Ypos] == _DIRTY_CELL
-    
+    def is_dirty(self, Xpos: int, Ypos: int):
+        return (self.grid[Xpos][Ypos] == 1)
+
     def get_dirty(self):
-        return self.dirty
+        return self.dirty_cells
 
-    def print_environment(self) -> None:
+    def print_environment(self):
         print(f'{[[self.grid[x][y] for y in range(self.sizeY)] for x in range(self.sizeX)]}')
-
