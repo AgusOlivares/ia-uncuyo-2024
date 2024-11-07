@@ -5,6 +5,7 @@ class Tablero:
         self.size = size
         self.grid = self.map_creation(size)
         self.place_queens()
+        self.visited_states = []
 
     def map_creation(self, N: int):
         grid = [[{'state': 0} for _ in range(N)] for _ in range(N)]
@@ -47,10 +48,20 @@ class Tablero:
                 conflicts += 1
 
         return conflicts
+    
+    def record_state(self):
+        # Registra el estado actual como una lista de posiciones de reinas en cada columna
+        state = [next(row for row in range(self.size) if self.grid[row][col]['state'] == 1) for col in range(self.size)]
+        self.visited_states.append(state)
+
 
     def map_print(self):
         for row in self.grid:
             print(' | '.join([str(cell['state']) for cell in row]))
         print(' ')
 
+class Solution:
+    def __init__(self, solution, visited_states):
+        self.solution = solution
+        self.visited_states = visited_states
 
