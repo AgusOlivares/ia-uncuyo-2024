@@ -1,67 +1,55 @@
 import random
-
-class Tablero:
-    def __init__(self, size: int) -> None:
-        self.size = size
-        self.grid = self.map_creation(size)
-        self.place_queens()
-        self.visited_states = []
-
-    def map_creation(self, N: int):
-        grid = [[{'state': 0} for _ in range(N)] for _ in range(N)]
-        return grid
-
-    def place_queens(self):
-        # Coloca una reina en cada columna
-        for i in range(self.size):
-            self.grid[0][i]['state'] = 1
-
-    def calculate_heuristic(self):
-        conflicts = 0
-        # reviso reinas en conflicto
-        for row in range(self.size):
-            for col in range(self.size):
-                if self.grid[row][col]['state'] == 1:
-                    conflicts += self.count_conflicts(row, col)
-
-        # Dividimos entre 2 para no contar conflictos ya calculados
-        return conflicts // 2
-
-    def count_conflicts(self, row, col):
-        conflicts = 0
-        
-        # Verificar misma fila
-        for i in range(self.size):
-            if i != col and self.grid[row][i]['state'] == 1:
-                conflicts += 1
-
-        # Verificar diagonal principal (i - j == row - col)
-        for i in range(self.size):
-            diag_col = col + (i - row)
-            if 0 <= diag_col < self.size and i != row and self.grid[i][diag_col]['state'] == 1:
-                conflicts += 1
-
-        # Verificar diagonal secundaria (i + j == row + col)
-        for i in range(self.size):
-            diag_col = col - (i - row)
-            if 0 <= diag_col < self.size and i != row and self.grid[i][diag_col]['state'] == 1:
-                conflicts += 1
-
-        return conflicts
+def generarTablero(size):
     
-    def record_state(self):
-        # Registra el estado actual como una lista de posiciones de reinas en cada columna
-        state = [next(row for row in range(self.size) if self.grid[row][col]['state'] == 1) for col in range(self.size)]
-        self.visited_states.append(state)
+    table = []
+    for _ in range(size):
+        row = random.randint(0,size-1)
+        table.append(row)
+    return table
 
+def checkRows(column , table):
 
-    def map_print(self):
-        for row in self.grid:
-            print(' | '.join([str(cell['state']) for cell in row]))
-        print(' ')
+    queens = 0
+    row = table[column]
+    for i in range(0,len(table)):
+        if i == column:
+            continue
+        if row == table[i]:
+            queens += 1
+    return queens
 
-class Solution:
-    def __init__(self, solution, visited_states):
-        self.solution = solution
-        self.visited_states = visited_states
+def checkDiagonals(column , table):
+    
+    queens = 0
+    row = table[column]
+    # Si esta en la diagonal verifica que abs(columna2-columna1) == abs(fila2 - fila1)
+    for i in range(0,len(table)):
+        if i == column:
+            continue
+        if (abs(column-i) == abs(row - table[i])):
+            queens += 1
 
+    return queens
+
+def checkConflicts(table):
+
+    queens = []
+    size = len(table)
+    for i in range(0,size):
+        queens.append(checkRows(i,table) + checkDiagonals(i,table))
+    return queens
+
+def printTablero(table):
+    size = len(table)
+    
+    # Recorre cada fila
+    for row in range(size):
+        line = ""
+        # Recorre cada columna
+        for col in range(size):
+            if table[col] == row:
+                line += "Q "  # Representa una reina
+            else:
+                line += ". "  # Representa un espacio vacío
+        print(line)
+    print("\n")
