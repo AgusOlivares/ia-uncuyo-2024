@@ -20,6 +20,34 @@ La utilización de Reinforcement Learning en el balanceo de carga aporta múltip
 
 Además es importante notar es la capacidad del agente de generalizar y aprender estrategias óptimas en entornos complejos y variables. A diferencia de las soluciones tradicionales, que siguen reglas fijas, un enfoque de RL puede ajustarse en tiempo real basándose en recompensas, proporcionando una optimización adaptativa continua.
 
+## Métricas de Evaluación:
+
+Para evaluar el rendimiento y la eficacia del agente "load balancer" en el manejo de la carga sobre el servidor web que ejecuta instancias de Docker, se han definido las siguientes métricas clave:
+
+1. **Latencia del Servidor**:  
+   Mide el tiempo de respuesta promedio del servidor ante una solicitud. Esta métrica es fundamental para evaluar la rapidez del servidor bajo diferentes condiciones de carga, y sirve como un indicador directo de su rendimiento en tiempo real.
+
+2. **Tiempo de Respuesta del Agente**:  
+   Registra el tiempo que el agente "load balancer" tarda en detectar y reaccionar a un cambio significativo en la carga (aumento o disminución de solicitudes). Es una métrica crítica para medir la capacidad de adaptación del agente ante variaciones de carga o ataques, como un DDoS.
+
+3. **Tasa de Intentos**:  
+   Representa la cantidad de solicitudes o intentos de conexión que el servidor recibe por segundo. Esta métrica es clave para detectar incrementos en la carga, pudiendo también actuar como indicador temprano de patrones de uso sospechosos.
+
+4. **Tasa de Errores**:  
+   Proporciona la cantidad de solicitudes fallidas o errores en la comunicación del servidor. Es crucial para detectar fallos en la estabilidad del sistema, especialmente bajo alta carga.
+
+5. **Uso de CPU y Memoria**:  
+   Evalúa el consumo de CPU y memoria en el servidor y en cada contenedor activo. Estos valores reflejan la eficiencia en la distribución de los recursos y permiten identificar momentos donde podría ser necesario escalar horizontalmente.
+
+6. **Tiempo Promedio de Procesamiento de Solicitudes**:  
+   Calcula el tiempo promedio que tarda el sistema en procesar cada solicitud. Esta métrica mide la eficiencia general del sistema y permite identificar cuellos de botella en el procesamiento de solicitudes.
+
+7. **Número de Instancias Activas**:  
+   Indica la cantidad de contenedores Docker activos en un momento dado. Esta métrica permite al agente realizar un seguimiento de los niveles de escalado para optimizar los recursos según las demandas de carga.
+
+Estas métricas han sido seleccionadas para proporcionar una evaluación integral del rendimiento del agente "load balancer" y del servidor web, permitiendo al agente ajustar sus acciones de escalado de manera eficiente y responder adecuadamente ante situaciones de sobrecarga.
+
+
 ## Listado de actividades a realizar:
 
 1. Revisión de la literatura sobre balanceo de carga y DRL (AIMA CAP 21) [4días y 2días]
