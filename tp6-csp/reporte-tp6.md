@@ -6,51 +6,32 @@ En una formulación CSP para Sudoku, las variables corresponden a cada celda del
 
 ### 2) Utilizar el algoritmo AC-3 para demostrar que la arco consistencia puede detectar la inconsistencia de la asignación parcial WA=red, V=blue para el problema de colorear el mapa de Australia.
 
-#### Solución con AC-3 para detectar inconsistencia en la asignación parcial
+Utilizaremos el algoritmo AC-3 para detectar la inconsistencia con la asignación parcial WA = Red , V = Blue. Es decir que cuando lleguemos a un punto en el que tengamos una variable X<sub>i</sub> con dominio vacío, no tendremos solución para esta asignación parcial.
 
-**Asignación parcial inicial:**
+*Nota*: Se asignará R = Red , G = Green y B = Blue.
 
-- \( WA = \text{red} \)
-- \( V = \text{blue} \)
+Dominio inicial del problema:
+- D(WA) = {R}
+- D(NT) = {R,B,G}
+- D(SA) = {R,B,G}
+- D(Q) = {R,B,G}
+- D(NSW) = {R,B,G}
+- D(V) = {B}
+Una posible ordenación de los arcos para este ejemplo es:
+Q = {(SA->WA), (SA->V), (NT->SA), (NSW->V), (NSW->SA), (Q->NSW), (Q->SA), (NT->Q), (NT->WA)}
 
-**Dominios iniciales de los otros estados:**
+Algoritmo:
+1. SA->WA : Elimino R del dominio SA, D(SA) = {B,G}
+2. SA->V : Elimino B del dominio SA, D(SA) = {G}
+3. NT->SA : Elimino G de NT, D(NT) = {R,B}
+4. NSW->V : Elimino B de NSW, D(NSW) = {R,G}
+5. NSW->SA : Elimino G de NSW, D(NSW) = {R}
+6. Q->NSW : Elimino R de Q, D(Q) = {B,G}
+7. Q->SA : Elimino G de Q, D(Q) = {B}
+8. NT->Q : Elimino B de NT, D(NT) = {R}
+9. NT->WA : Elimino R de NT, D(NT) = { }
 
-- \( NT = \{ \text{red}, \text{green}, \text{blue} \} \)
-- \( SA = \{ \text{red}, \text{green}, \text{blue} \} \)
-- \( Q = \{ \text{red}, \text{green}, \text{blue} \} \)
-- \( NSW = \{ \text{red}, \text{green}, \text{blue} \} \)
-
-**Paso 1: Propagación de restricciones**
-
-- Eliminar **red** de \( NT \) y \( SA \) (por \( WA = \text{red} \)).
-- Eliminar **blue** de \( SA \) y \( NSW \) (por \( V = \text{blue} \)).
-
-**Dominios actualizados:**
-
-- \( NT = \{ \text{green}, \text{blue} \} \)
-- \( SA = \{ \text{green} \} \)
-- \( Q = \{ \text{red}, \text{green}, \text{blue} \} \)
-- \( NSW = \{ \text{red}, \text{green} \} \)
-
-**Paso 2: Revisión de arcos**
-
-- \( SA \) solo puede ser **green**, lo que implica:
-  - Eliminar **green** de \( NT \) y \( NSW \).
-
-**Dominios actualizados:**
-
-- \( NT = \{ \text{blue} \} \)
-- \( NSW = \{ \text{red} \} \)
-
-**Paso 3: Detección de inconsistencia**
-
-- \( NT \) solo puede ser **blue**, lo que implica eliminar **blue** de \( Q \).
-- Si \( Q \) se revisa, su dominio queda \( \{ \text{red}, \text{green} \} \).
-
-**Resultado:**
-El algoritmo AC-3 muestra que, al propagar las restricciones, no todos los estados pueden asignarse de forma consistente. La asignación parcial \( WA = \text{red} \) y \( V = \text{blue} \) es inconsistente porque los dominios de algunos estados se reducen de forma que violan las restricciones de adyacencia.
-
-
+Como NT no tiene mas valores en su dominio, podemos concluir que para esta asignación parcial no tenemos solución.
 ### 3) ¿Cuál es la complejidad en el peor caso cuando se ejecuta AC-3 en un árbol estructurado CSP? (i.e. cuando el grafo de restricciones forma un árbol: cualquiera dos variables están relacionadas por a lo sumo un camino).
 
 En un árbol, las conexiones entre los nodos son claras y directas. Esto significa que el algoritmo AC-3 solo necesita revisar cada conexión una vez, lo que resulta en una eficiencia de O(ED), donde E es el número de conexiones y D el número máximo de posibles valores para cada nodo.
