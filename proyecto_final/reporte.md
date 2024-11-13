@@ -47,6 +47,8 @@ Para evaluar el rendimiento y la eficacia del agente "load balancer" en el manej
 
 Estas métricas han sido seleccionadas para proporcionar una evaluación integral del rendimiento del agente "load balancer" y del servidor web, permitiendo al agente ajustar sus acciones de escalado de manera eficiente y responder adecuadamente ante situaciones de sobrecarga.
 
+## Objetivos del Proyecto:
+Este proyecto tiene como objetivo principal desarrollar un sistema de balanceo de carga inteligente y adaptable para entornos de contenedores, capaz de optimizar la distribución de solicitudes y mejorar la resiliencia del sistema. Otro de los objetivos es comparar la eficiencia del agente creado con el rendimiento que presenta el algoritmo Round Robin y la viabilidad que posee frente a este 
 
 ## Listado de actividades a realizar:
 
@@ -65,3 +67,8 @@ Estas métricas han sido seleccionadas para proporcionar una evaluación integra
 ## Cronograma estimado de actividades (gantt):
 
 ![Cronograma](./cronograma.png)
+
+## Referencias:
+Para la elaboracion del proyecto se utilizara como referencia los siguientes papers
+- Container Allocation in Cloud Environment Using Multi-Agent Deep Reinforcement Learning: https://www.mdpi.com/2079-9292/12/12/2614
+- A-SARSA: A Predictive Container Auto-Scaling Algorithm Based on Reinforcement Learning: https://ieeexplore.ieee.org/abstract/document/9284122
